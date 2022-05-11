@@ -1,25 +1,24 @@
-from typing import Optional
-
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from pydantic import BaseSettings
-from aiogram.types import ParseMode
-
-from aiogram import Dispatcher, Bot, types
 
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = 'Movement'
-    TG_TOKEN: Optional[str]
-    ADMINS: Optional[str] = ''
-    LOGS_BASE_PATH: Optional[str] = ''
-    USE_REDIS: Optional[bool] = False
-    DB_HOST: Optional[str] = '127.0.0.1'
+    TG_TOKEN: str
+    ADMINS: str = ''
+    LOGS_BASE_PATH: str = ''
+    USE_REDIS: bool = False
+    DB_HOST: str = '127.0.0.1'
     DB_PASS: str
     DB_USER: str
     DB_NAME: str
-    CREDENTIALS_PATH: Optional[str] = '../data/credentials.json'
-    TOKEN_PATH: Optional[str] = '../data/token.json'
+    CREDENTIALS_PATH: str = '../data/credentials.json'
+    TOKEN_PATH: str = '../data/token.json'
     SPREADSHEET_ID: str
+
+    WEBHOOK_PATH: str = ''
+    WEBHOOK_URL: str
+    WEBAPP_HOST: str = '127.0.0.1'
+    WEBAPP_PORT: int = 8080
 
     class Config:
         env_prefix = 'MOVEMENT_'

@@ -24,5 +24,6 @@ async def bot_echo_all(message: types.Message, state: FSMContext):
 
 
 def register_echo(dp: Dispatcher):
-    dp.register_message_handler(bot_echo)
-    dp.register_message_handler(bot_echo_all, state="*", content_types=types.ContentTypes.ANY)
+    # dp.register_message_handler(bot_echo)
+    # dp.register_message_handler(bot_echo_all, state="*", content_types=types.ContentTypes.ANY)
+    pass

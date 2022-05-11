@@ -42,8 +42,15 @@ class DbConfig:
 @dataclass
 class TgBot:
     token: str
+    chat_id: int
     admin_ids: List[int]
     use_redis: bool
+
+    def __init__(self, token, admin_ids, use_redis):
+        self.token = token
+        self.chat_id = int(token.split(':')[0])
+        self.admin_ids = admin_ids
+        self.use_redis = use_redis
 
 
 @dataclass
@@ -60,11 +67,20 @@ class Miscellaneous:
 
 
 @dataclass
+class WebhookConfig:
+    path: str
+    url: str
+    host: str
+    port: int
+
+
+@dataclass
 class Config:
     tg_bot: TgBot
     db: DbConfig
     misc: Miscellaneous
     sheet: SheetConfig
+    webhook: WebhookConfig
 
 
 def get_creds(creds_file_name: str, token_file_name: str) -> Credentials:
@@ -91,7 +107,7 @@ def load_config():
         tg_bot=TgBot(
             token=settings.TG_TOKEN,
             admin_ids=list(map(int, settings.ADMINS.split(','))),
-            use_redis=settings.USE_REDIS,
+            use_redis=settings.USE_REDIS
         ),
         db=DbConfig(
             host=settings.DB_HOST,
@@ -105,5 +121,11 @@ def load_config():
             token_path=settings.TOKEN_PATH,
             credentials=get_creds(settings.CREDENTIALS_PATH, settings.TOKEN_PATH),
             spreadsheet_id=settings.SPREADSHEET_ID
+        ),
+        webhook=WebhookConfig(
+            path=settings.WEBHOOK_PATH,
+            url=settings.WEBHOOK_URL,
+            host=settings.WEBAPP_HOST,
+            port=settings.WEBAPP_PORT
         )
     )
