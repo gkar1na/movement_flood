@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  bot:
+    image: "${BOT_IMAGE_NAME:-telegram_bot-image}"
+    container_name: "${BOT_CONTAINER_NAME:-telegram_bot-container}"
+    stop_signal: SIGINT
+    build:
+      context: .
+    working_dir: "/usr/src/app/${BOT_NAME:-telegram_bot}"
+    volumes:
+      - .:/usr/src/app/${BOT_NAME:-telegram_bot}
+    command: python3 bot.py
+    restart: always
+    env_file:
+      - ".env"
+    environment:
+      - BOT_NAME=$MOVEMENT_BOT_NAME
+    networks:
+      - telegram_bot
+
+
+networks:
+  telegram_bot:
+    driver: bridge

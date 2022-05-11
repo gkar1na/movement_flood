@@ -10,8 +10,16 @@ from aiogram import Dispatcher, Bot, types
 class Settings(BaseSettings):
     PROJECT_NAME: str = 'Movement'
     TG_TOKEN: Optional[str]
-    ADMINS: Optional[list] = []
+    ADMINS: Optional[str] = ''
     LOGS_BASE_PATH: Optional[str] = ''
+    USE_REDIS: Optional[bool] = False
+    DB_HOST: Optional[str] = '127.0.0.1'
+    DB_PASS: str
+    DB_USER: str
+    DB_NAME: str
+    CREDENTIALS_PATH: Optional[str] = '../data/credentials.json'
+    TOKEN_PATH: Optional[str] = '../data/token.json'
+    SPREADSHEET_ID: str
 
     class Config:
         env_prefix = 'MOVEMENT_'
@@ -20,7 +28,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
-storage = MemoryStorage()
-bot = Bot(token=settings.TG_TOKEN, parse_mode=ParseMode.MARKDOWN)
-dp = Dispatcher(bot, storage=storage)
